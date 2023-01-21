@@ -37,27 +37,27 @@ suite('Functional Tests', function () {
     done();
   });
 
-  // test('Convert an invalid number such as 3/7.2/4kg', (done) => {
-  //   chai
-  //     .request(server)
-  //     .get('/api/convert?input=3/7.2/4kg')
-  //     .end((req, res) => {
-  //       assert.equal(res.status, 200);
-  //       assert.equal(res.text, 'invalid number');
-  //     });
-  //   done();
-  // });
+  test('Convert an invalid number such as 3/7.2/4kg', (done) => {
+    chai
+      .request(server)
+      .get('/api/convert?input=3/7.2/4kg')
+      .end((req, res) => {
+        assert.equal(res.status, 200);
+        assert.equal(res.text, 'invalid number');
+      });
+    done();
+  });
 
-  // test('Convert an invalid number AND unit such as 3/7.2/4kilomegagram', (done) => {
-  //   chai
-  //     .request(server)
-  //     .get('/api/convert?input=3/7.2/4kilomegagram')
-  //     .end((req, res) => {
-  //       assert.equal(res.status, 200);
-  //       assert.equal(res.text, 'invalid number and unit');
-  //     });
-  //   done();
-  // });
+  test('Convert an invalid number AND unit such as 3/7.2/4kilomegagram', (done) => {
+    chai
+      .request(server)
+      .get('/api/convert?input=3/7.2/4kilomegagram')
+      .end((req, res) => {
+        assert.equal(res.status, 200);
+        assert.equal(res.text, 'invalid number and unit');
+      });
+    done();
+  });
 
   test('Convert with no number such as kg:', (done) => {
     chai

@@ -1,21 +1,30 @@
 function ConvertHandler() {
-  this.getNum = function (input) {
-    try {
-      const string = input.match(/[a-zA-Z]+/g);
-      console.log({ string });
-      const unit = this.getUnit(input);
-      console.log({ unit });
+  this.validNumber = (input, string) => {
+    let number = input.split(string)[0] || 1;
 
-      if (!unit || !string) {
-        throw new Error('invalid unit');
+    if (number.toString().includes('/')) {
+      let values = number.toString().split('/');
+      if (values.length != 2) {
+        throw new Error('invalid number');
       }
+    }
+    return number;
+  };
 
-      let number = input.split(string)[0] || 1;
+  this.getNum = function (input) {
+    const string = input.match(/[a-zA-Z]+/g)[0];
+    const unit = this.getUnit(input);
 
-      return Number(eval(number));
-    } catch (error) {
+    if (!unit || !string) {
       throw new Error('invalid unit');
     }
+    const result = Number(eval(this.validNumber(input, string)));
+
+    if (isNaN(result)) {
+      throw new Error('invalid number');
+    }
+
+    return result;
   };
 
   this.getUnit = function (input) {
@@ -33,6 +42,11 @@ function ConvertHandler() {
     } else if (string === 'mi') {
       return 'mi';
     } else {
+      try {
+        this.validNumber(input);
+      } catch (error) {
+        throw new Error('invalid number and unit');
+      }
       throw new Error('invalid unit');
     }
   };

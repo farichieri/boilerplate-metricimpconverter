@@ -7,9 +7,11 @@ let convertHandler = new ConvertHandler();
 suite('Unit Tests', function () {
   test('Should correctly read a whole number input', () => {
     assert.typeOf(convertHandler.getNum('4gal'), 'number');
+    assert.equal(convertHandler.getNum('10kg'), 10);
   });
   test('Should correctly read a decimal number input.', () => {
     assert.typeOf(convertHandler.getNum('5.4lbs'), 'number');
+    assert.equal(convertHandler.getNum('3.2kg'), 3.2);
   });
   test('Should correctly read a fractional input.', () => {
     assert.equal(convertHandler.getNum('1/2km'), 0.5);
@@ -30,11 +32,18 @@ suite('Unit Tests', function () {
     assert.equal(convertHandler.getUnit('1/2km'), 'km');
     assert.equal(convertHandler.getUnit('5.4/3lbs'), 'lbs');
     assert.equal(convertHandler.getUnit('kg'), 'kg');
+    assert.equal(convertHandler.getUnit('L'), 'L');
   });
   test('Should correctly return an error for an invalid input unit.', () => {
     assert.throws(() => {
       convertHandler.getUnit('12e');
     }, Error);
+  });
+  test('should correctly return the spelled-out string unit for each valid input unit.', () => {
+    assert.equal(convertHandler.spellOutUnit('4gal'), 'gallons');
+    assert.equal(convertHandler.spellOutUnit('1/2km'), 'kilometers');
+    assert.equal(convertHandler.spellOutUnit('5.4/3lbs'), 'pounds');
+    assert.equal(convertHandler.spellOutUnit('kg'), 'kilograms');
   });
   test('Should return the correct return unit for each valid input unit.', () => {
     assert.equal(convertHandler.getReturnUnit('4gal'), 'L');
